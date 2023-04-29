@@ -1,0 +1,6 @@
+hogtie -> import
+oink -> print to stdout
+squeal -> print to stdout but in all caps
+troph -> stderr
+for curl(var) in tail(iterable or collection) -> for loop, obviously.
+
