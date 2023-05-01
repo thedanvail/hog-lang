@@ -27,14 +27,15 @@ impl fmt::Display for ParseError<'_> {
 
 impl Parser {
     pub fn parse(text: &str) -> TokenStream {
-        let stream = text.parse().unwrap();
+        todo!()
+        // let stream = text.parse().unwrap();
     }
 
     pub fn parse_block(text_block: &str) -> TokenStream {
-
+        todo!()
     }
 
-    pub fn parse_line(text_line: &str) -> Result<[&str], ParseError> {
-        
+    pub fn parse_line(text_line: &str) -> Result<Box<dyn Fn() -> ()>, ParseError> {
+        todo!() 
     }
 }
