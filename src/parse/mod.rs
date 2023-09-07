@@ -1,11 +1,12 @@
-pub mod types;
 pub mod line;
-
-use types::{CommentKind, OpToken, Delimiter, LitKind};
 
 use proc_macro::TokenStream;
 
 use std::fmt;
+
+pub enum Ops {
+    Assign,
+}
 
 pub struct Parser;
 
@@ -27,14 +28,14 @@ impl fmt::Display for ParseError<'_> {
 
 impl Parser {
     pub fn parse(text: &str) -> TokenStream {
-        let stream = text.parse().unwrap();
+        todo!()
     }
 
     pub fn parse_block(text_block: &str) -> TokenStream {
-
+        todo!()
     }
 
-    pub fn parse_line(text_line: &str) -> Result<[&str], ParseError> {
+    pub fn parse_line(text_line: &str) -> Result<&[&str], ParseError> {
         
     }
 }
