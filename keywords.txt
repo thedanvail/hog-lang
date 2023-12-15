@@ -4,4 +4,5 @@ squeal -> print to stdout but in all caps
 troph -> stderr
 for curl(var) in tail(iterable or collection) -> for loop, obviously.
 hakuna matatata -> Reset a variable to initial definition
+not my pig, not my farm -> crossing thread boundaries?
 
