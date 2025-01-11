@@ -1,0 +1,8 @@
+CMakeCache.txt
+cmake_install.cmake
+build/
+compile_commands.json
+.cache/
+bin/
+hog-lang
+hogc
