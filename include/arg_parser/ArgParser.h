@@ -1,5 +1,3 @@
-#include "../common/Iterator.h"
-
 #include <cstdint>
 #include <vector>
 
@@ -25,10 +23,6 @@ class ArgParser
     public:
         ArgParser(int argc, char8_t* argv[]);
         const std::vector<Arg> Args() const;
-        Iterator Iter();
-        Iterator Begin();
-        Iterator End();
-        void Next(Iterator& iter);
     private:
         std::vector<Arg> m_args;
 };

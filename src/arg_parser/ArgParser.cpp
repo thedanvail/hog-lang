@@ -1,7 +1,6 @@
 #include "../../include/arg_parser/ArgParser.h"
+#include "../../include/common/HogString.h"
 #include "../../include/common/Error.h"
-
-#include <cassert>
 
 Arg::Arg(char8_t* feed)
 {
@@ -15,9 +14,9 @@ Arg::Arg(char8_t* feed)
         case 'O':
             m_flag = ArgFlags::O;
         default:
-            std::string errorMessage("Incorrect error flag: ");
-            errorMessage.append(static_cast<char>(feed[1]));
-            HogError::Panic();
+            HogString errorMsg("Incorrect error flag: ");
+            errorMsg.Append(feed[1]);
+            HogError::Panic(errorMsg.Str());
     }
     uint8_t idx = 3;
     while(idx < MAX_CHARS+3 && feed[idx] != '\0')

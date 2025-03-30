@@ -1,15 +1,23 @@
-#include "../include/arg_parser/ArgParser.h"
+#include "arg_parser/ArgParser.h"
+#include "common/HogString.h"
 
 #include <cstdio>
-// #include <iostream>
-// #include <string>
+#include <fstream>
+#include <utpp/utpp.h>
 
-int main(int argc, char* argv[]) {
-    // ArgParser parser(argc, argv);
-    // for (std::string s : parser.Args())
-    // {
-    //     std::cout << s << std::endl;
-    // }
-    return 0;
+
+int main(int argc, char** argv)
+{
+    std::printf("%d\n", argc);
+
+    for(std::size_t idx = 1; idx < argc; idx++)
+    {
+        std::printf("%s\n", argv[idx]);
+    }
+
+    std::ifstream file(argv[1]);
+    char contents[2048];
+    file.read(contents, 2048);
+    std::printf("%s\n", contents);
+    // UnitTest::RunAllTests();
 }
-

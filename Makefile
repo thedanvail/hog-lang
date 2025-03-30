@@ -1,16 +1,19 @@
 ROOT_DIR := $(shell pwd)
 
 build:
-	g++ $(shell find $(ROOT_DIR/src) -o hogc
+	mkdir build
+	cmake -S . -B build
+	cmake --build build
+	mv build/compile_commands.json .
 
 clean:
-	rm hogc 
+	rm -rf build/
 
 fresh:
 	make clean && make build
 
 test:
-	hogc test.hog
+	./hogc test.hog
 
 fresh-test:
 	make clean && make test
