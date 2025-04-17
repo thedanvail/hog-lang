@@ -18,7 +18,8 @@ file(GLOB SUBDIRS RELATIVE "${PROJECT_SOURCE_DIR}/include"
 )
 
 set(INCLUDE_DIRS "${PROJECT_SOURCE_DIR}/include" 
-    "${PROJECT_SOURCE_DIR}/external/utpp/include" 
+    "${PROJECT_SOURCE_DIR}/include/arg_parser" 
+    "${PROJECT_SOURCE_DIR}/vendor/utpp/include" 
     "${PROJECT_SOURCE_DIR}/src"
 )
 

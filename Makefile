@@ -5,6 +5,7 @@ build:
 	cmake -S . -B build
 	cmake --build build
 	mv build/compile_commands.json .
+	mv build/hogc .
 
 clean:
 	rm -rf build/

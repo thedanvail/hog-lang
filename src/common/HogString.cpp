@@ -4,9 +4,8 @@
 #include <cstddef>
 #include <cstdlib>
 #include <cstring>
+#include <queue>
 #include <string>
-
-#include <utpp/utpp.h>
 
 HogString::HogString()
 {
@@ -194,31 +193,19 @@ void HogString::ToUpper()
     HogStringUtils::ToUpper(m_pBuffer);
 }
 
-HogArray<char8_t*> HogString::Split(const char8_t* c) const
-{
-}
-
-HogArray<char8_t*> HogString::_Split(char8_t* apString, const char8_t* apDelimiter) const
-{
-    if(!apString)
-    {
-        return HogArray<char8_t*>();
+char8_t* HogString::QueueToChar8Array(std::queue<char8_t>& q) const {
+    if (q.empty()) {
+        return nullptr;
     }
 
-
-    HogArray<char8_t*, 10> retArray;
-    if(!apDelimiter)
-    {
-        return apString;
+    std::vector<char8_t> buffer;
+    while (!q.empty()) {
+        buffer.push_back(q.front());
+        q.pop(); 
     }
 
-    std::size_t strLen = std::char_traits<char8_t>::length(apString);
-    
-    return retArray;
+    buffer.push_back('\0');
+    char8_t* result = new char8_t[buffer.size()];
+    std::copy(buffer.begin(), buffer.end(), result);
+    return result;
 }
-
-TEST(ShouldPass)
-{
-    CHECK(true);
-}
-

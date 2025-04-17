@@ -1,10 +1,13 @@
-#include "../../include/arg_parser/ArgParser.h"
-#include "../../include/common/HogString.h"
-#include "../../include/common/Error.h"
+#include "ArgParser.h"
+#include "HogString.h"
+#include "Error.h"
+#include <cctype>
 
 Arg::Arg(char8_t* feed)
 {
-    switch(feed[1])
+    char8_t flag = feed[1];
+    flag = std::toupper(flag);
+    switch(flag)
     {
         case 'i':
         case 'I':
@@ -18,7 +21,8 @@ Arg::Arg(char8_t* feed)
             errorMsg.Append(feed[1]);
             HogError::Panic(errorMsg.Str());
     }
-    uint8_t idx = 3;
+
+    uint8_t idx = 3; // Skip the "-", the letter, and the following space
     while(idx < MAX_CHARS+3 && feed[idx] != '\0')
     {
 

@@ -15,8 +15,8 @@ class Iterator
 public:
     Iterator(T* t) : m_index(0) { m_element = t; }
     ~Iterator() = default;
-    inline void Begin();
-    inline void End();
+    inline Iterator Begin();
+    inline Iterator End();
     inline void Next();
     inline bool operator==(Iterator aOther);
     inline T* Get();

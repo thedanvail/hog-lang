@@ -1,5 +1,3 @@
-#pragma once
-
 #include "HogArray.h"
 #include <cstddef>
 #include <cstring>

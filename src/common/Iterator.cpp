@@ -4,7 +4,7 @@
 #include <stdint.h>
 
 template<std::equality_comparable T>
-inline void Iterator<T>::Begin()
+inline Iterator<T> Iterator<T>::Begin()
 {
     if(m_element && m_index)
     {
@@ -15,7 +15,7 @@ inline void Iterator<T>::Begin()
 }
 
 template<std::equality_comparable T>
-inline void Iterator<T>::End()
+inline Iterator<T> Iterator<T>::End()
 {
     m_element = nullptr;
     m_index = UINT32_MAX;

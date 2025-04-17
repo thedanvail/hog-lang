@@ -44,28 +44,3 @@ HogString SourceFile::ToHogString()
     return HogString(m_filePath);
 }
 
-char8_t* SourceFile::ToString()
-{
-#ifdef IS_POSIX
-    return ToStringPosix();
-#elif IS_WINDOWS
-    return ToStringWindows();
-#else
-    std::terminate();
-#endif
-}
-
-char8_t* SourceFile::ToStringPosix()
-{
-    HogString string(m_filePath.Size());
-    char8_t* posixString = string.Str();
-    for(std::size_t i = 0; i < m_filePath.Size(); ++i)
-    {
-        if(posixString[i] == '\\')
-        {
-            posixString[i] = '/';
-        }
-    }
-    return posixString;
-}
-

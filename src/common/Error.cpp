@@ -1,4 +1,4 @@
-#include "../../include/common/Error.h"
+#include "Error.h"
 
 #include <cstdlib>
 #include <cstdio>

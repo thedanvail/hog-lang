@@ -1,4 +1,5 @@
-#include "../../include/tokenizer/Tokenizer.h"
+#include "Tokenizer.h"
+
 
 namespace Tokenizer
 {

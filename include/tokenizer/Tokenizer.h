@@ -2,6 +2,7 @@
 
 #include "HogString.h"
 
+#include <string>
 #include <cstdint>
 
 enum class Token
@@ -51,3 +52,5 @@ OpCode ToOpCode(const char* const c);
 /// If you want multi-character operations, see the note in the comments above. 
 OpCode ToOpCode(const char8_t* const c);
 
+
+OpCode ToOpCode(std::string s);

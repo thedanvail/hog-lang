@@ -32,8 +32,6 @@ public:
     LineIterator Iterator();
 
 private:
-    char8_t* ToStringWindows();
-    char8_t* ToStringPosix();
 
     HogString m_filePath;
     HogString m_fileContents;

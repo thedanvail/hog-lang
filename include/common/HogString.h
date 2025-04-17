@@ -4,6 +4,7 @@
 
 #include <cstdarg>
 #include <cstdint>
+#include <queue>
 
 constexpr uint32_t DEFAULT_BUFF_SIZE = 256;
 
@@ -39,12 +40,9 @@ public:
     void Clear();
     void Reset();
     HogString Clone();
-    HogArray<char8_t*> Split(const char c) const;
-    HogArray<char8_t*> Split(const char* c) const;
-    HogArray<char8_t*> Split(const char8_t c) const;
-    HogArray<char8_t*> Split(const char8_t* c) const;
 
 private:
+    char8_t* QueueToChar8Array(std::queue<char8_t>& q) const;
     void InitBuff(const char8_t* apString, std::size_t aBuffSize = 0);
     void InitBuff(const char* apString, std::size_t aBuffSize = 0);
     void VarArgPrintf(char* apString, uint32_t aDestSize, const char* apFormatBuffer, va_list aArgs);
@@ -52,7 +50,6 @@ private:
     void SetSmallerBuffSize(uint32_t aSize);
 
     // TODO: move this to a StringUtils namespace that I plan to (won't) eventually make.
-    HogArray<char8_t*> _Split(char8_t* string, const char8_t* delimiter) const;
     uint32_t m_size;
     char8_t* m_pBuffer;
 };
