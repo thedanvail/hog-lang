@@ -1,7 +1,5 @@
 #pragma once
 
-#include "HogArray.h"
-
 #include <cstdarg>
 #include <cstdint>
 #include <queue>
@@ -15,8 +13,7 @@ public:
     HogString();
     ~HogString();
     HogString(const char* apString, std::size_t aBuffSize = 0);
-    HogString(const char8_t* apString, std::size_t aBuffSize = 0);
-    HogString(char8_t aChar);
+    HogString(char aChar);
     HogString(const HogString& aOther);
     HogString(const HogString&& aOther);
     HogString(const uint32_t aSize);
@@ -24,17 +21,17 @@ public:
     HogString& operator=(const HogString& aOther);
     bool operator==(const HogString& aOther) const;
 
-    void Append(char8_t* aAppending);
+    void Append(char* aAppending);
     void Append(HogString aAppending);
-    void Sprintf(const char8_t* aBaseString, ...);
+    void Sprintf(const char* aBaseString, ...);
     void Sprintf(HogString aBaseString, ...);
-    void SprintfAppend(char8_t* aBaseString, ...);
+    void SprintfAppend(char* aBaseString, ...);
     void SprintfAppend(HogString aBaseString, ...);
     void InitBuff(uint32_t aSize);
     void SetReservedSize(uint32_t aRequestedSize);
     std::size_t Size() const { return m_size; }
-    const char8_t* Str() const { return m_pBuffer; }
-    char8_t* ToOwnedStr();
+    const char* Str() const { return m_pBuffer; }
+    char* ToOwnedStr();
     void ToUpper();
     void ToLower();
     void Clear();
@@ -42,8 +39,7 @@ public:
     HogString Clone();
 
 private:
-    char8_t* QueueToChar8Array(std::queue<char8_t>& q) const;
-    void InitBuff(const char8_t* apString, std::size_t aBuffSize = 0);
+    char* QueueToChar8Array(std::queue<char>& q) const;
     void InitBuff(const char* apString, std::size_t aBuffSize = 0);
     void VarArgPrintf(char* apString, uint32_t aDestSize, const char* apFormatBuffer, va_list aArgs);
     void SetLargerBuffSize(uint32_t aSize);
@@ -51,5 +47,5 @@ private:
 
     // TODO: move this to a StringUtils namespace that I plan to (won't) eventually make.
     uint32_t m_size;
-    char8_t* m_pBuffer;
+    char* m_pBuffer;
 };

@@ -19,17 +19,16 @@ public:
     SourceFile(SourceFile &aOther);
     SourceFile(SourceFile &&aOther);
     SourceFile(const char* apPath);
-    SourceFile(const char8_t* apPath);
     SourceFile operator=(SourceFile aOther);
     SourceFile operator+(SourceFile aOther);
 
-    HogString GetContents();
-    HogString ReadLine();
     void SetSourceFile(const char8_t* apFilePath);
     void SetSourceFile(HogString apFilePath);
-    char8_t* ToString();
     HogString ToHogString();
+    HogString GetContents();
     LineIterator Iterator();
+    HogString ReadLine();
+    char8_t* ToString();
 
 private:
 

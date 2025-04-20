@@ -5,7 +5,7 @@
 
 Arg::Arg(char8_t* feed)
 {
-    char8_t flag = feed[1];
+    char flag = feed[1];
     flag = std::toupper(flag);
     switch(flag)
     {
@@ -18,7 +18,7 @@ Arg::Arg(char8_t* feed)
             m_flag = ArgFlags::O;
         default:
             HogString errorMsg("Incorrect error flag: ");
-            errorMsg.Append(feed[1]);
+            errorMsg.Append(flag);
             HogError::Panic(errorMsg.Str());
     }
 

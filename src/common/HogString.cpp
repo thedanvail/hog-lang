@@ -1,5 +1,5 @@
 #include "HogString.h"
-#include "StringUtils.h"
+#include "HogStringUtils.h"
 
 #include <cstddef>
 #include <cstdlib>
@@ -17,15 +17,10 @@ HogString::~HogString()
     delete[] m_pBuffer;
 }
 
-HogString::HogString(char8_t aChar)
+HogString::HogString(char aChar)
 {
     SetReservedSize(1);
     m_pBuffer[0] = aChar;
-}
-
-HogString::HogString(const char8_t* apString, std::size_t aBuffSize)
-{
-    InitBuff(apString, aBuffSize);
 }
 
 HogString::HogString(const char* apString, std::size_t aBuffSize)
@@ -36,7 +31,7 @@ HogString::HogString(const char* apString, std::size_t aBuffSize)
 HogString::HogString(const HogString& aOther)
 {
     SetReservedSize(aOther.Size());
-    std::char_traits<char8_t>::copy(m_pBuffer, aOther.Str(), aOther.Size() - 1);
+    std::char_traits<char>::copy(m_pBuffer, aOther.Str(), aOther.Size() - 1);
 }
 
 HogString::HogString(const HogString&& aOther)
@@ -62,8 +57,8 @@ HogString& HogString::operator=(const HogString& aOther)
         return *this;
     }
     HogString tmp(aOther);
-    char8_t* temp = m_pBuffer;
-    m_pBuffer = const_cast<char8_t*>(aOther.Str());
+    char* temp = m_pBuffer;
+    m_pBuffer = const_cast<char*>(aOther.Str());
 
     return *this;
 }
@@ -72,25 +67,15 @@ bool HogString::operator==(const HogString& aOther) const
 {
     if(m_size == aOther.m_size)
     {
-        return std::char_traits<char8_t>::compare(m_pBuffer, aOther.m_pBuffer, m_size);
+        return std::char_traits<char>::compare(m_pBuffer, aOther.m_pBuffer, m_size);
     }
     return false;
 }
 
 void HogString::InitBuff(const char* apString, std::size_t aBuffSize)
 {
-    const char8_t* ch8 = reinterpret_cast<const char8_t*>(apString);
+    const char* ch8 = reinterpret_cast<const char*>(apString);
     InitBuff(ch8, aBuffSize);
-}
-
-void HogString::InitBuff(const char8_t* apString, std::size_t aBuffSize)
-{
-    if(!aBuffSize)
-    {
-        aBuffSize = std::char_traits<char8_t>::length(apString);
-    }
-    m_pBuffer = new char8_t[aBuffSize];
-    std::char_traits<char8_t>::copy(m_pBuffer, apString, aBuffSize-1);
 }
 
 void HogString::SetLargerBuffSize(uint32_t aSize)
@@ -99,7 +84,7 @@ void HogString::SetLargerBuffSize(uint32_t aSize)
     {
         return;
     }
-    char8_t* newBuff = static_cast<char8_t*>(std::malloc(aSize * sizeof(char8_t)));
+    char* newBuff = static_cast<char*>(std::malloc(aSize * sizeof(char)));
     std::memcpy(newBuff, m_pBuffer, m_size);
     delete[] m_pBuffer;
     m_pBuffer = newBuff;
@@ -112,7 +97,7 @@ void HogString::SetSmallerBuffSize(uint32_t aSize)
     {
         SetLargerBuffSize(aSize);
     }
-    char8_t* newBuff = static_cast<char8_t*>(std::malloc(aSize * sizeof(char8_t)));
+    char* newBuff = static_cast<char*>(std::malloc(aSize * sizeof(char)));
     std::memcpy(newBuff, m_pBuffer, aSize);
     delete[] m_pBuffer;
     m_pBuffer = newBuff;
@@ -137,7 +122,7 @@ void HogString::SetReservedSize(uint32_t aSize)
     }
 }
 
-void HogString::Sprintf(const char8_t* aBaseString, ...)
+void HogString::Sprintf(const char* aBaseString, ...)
 {
     if(m_size == 0)
     {
@@ -158,17 +143,17 @@ void HogString::Append(HogString aAppending)
     Append(aAppending.Str());    
 }
 
-void HogString::Append(char8_t* aAppending)
+void HogString::Append(char* aAppending)
 {
     if(!aAppending)
     {
         return;
     }
-    std::size_t appendSize = std::char_traits<char8_t>::length(aAppending);
+    std::size_t appendSize = std::char_traits<char>::length(aAppending);
     std::size_t oldSize = Size();
-    char8_t* offset = m_pBuffer + oldSize;
+    char* offset = m_pBuffer + oldSize;
     SetReservedSize(Size() + appendSize);
-    std::char_traits<char8_t>::copy(offset, aAppending, appendSize-1);
+    std::char_traits<char>::copy(offset, aAppending, appendSize-1);
 }
 
 void HogString::VarArgPrintf(char* apString, uint32_t aDestSize, const char* apFormatBuffer, va_list aArgs)
@@ -183,7 +168,7 @@ void HogString::VarArgPrintf(char* apString, uint32_t aDestSize, const char* apF
 HogString HogString::Clone()
 {
     std::size_t newSize = Size();
-    char8_t* newBuff = new char8_t[Size()];
+    char* newBuff = new char[Size()];
     std::memcpy(newBuff, m_pBuffer, newSize);
     return HogString(newBuff, newSize);
 }
@@ -193,19 +178,19 @@ void HogString::ToUpper()
     HogStringUtils::ToUpper(m_pBuffer);
 }
 
-char8_t* HogString::QueueToChar8Array(std::queue<char8_t>& q) const {
+char* HogString::QueueToChar8Array(std::queue<char>& q) const {
     if (q.empty()) {
         return nullptr;
     }
 
-    std::vector<char8_t> buffer;
+    std::vector<char> buffer;
     while (!q.empty()) {
         buffer.push_back(q.front());
         q.pop(); 
     }
 
     buffer.push_back('\0');
-    char8_t* result = new char8_t[buffer.size()];
+    char* result = new char[buffer.size()];
     std::copy(buffer.begin(), buffer.end(), result);
     return result;
 }
