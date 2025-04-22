@@ -19,3 +19,6 @@ test:
 fresh-test:
 	make clean && make test
 
+check:
+	cppcheck --enable=all --inconclusive --std=c++23 -I include .
+

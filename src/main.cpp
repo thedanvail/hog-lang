@@ -1,5 +1,5 @@
 #include "ArgParser.h"
-#include "../include/parser/Parser.h"
+#include "Parser.h"
 
 #include <cstdio>
 #include <filesystem>
