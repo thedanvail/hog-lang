@@ -1,4 +1,4 @@
-#include "ArgParser.h"
+#include "HogStringUtils.h"
 #include "Parser.h"
 
 #include <cstdio>
@@ -7,6 +7,15 @@
 #include <iostream>
 #include <string>
 #include <unistd.h>
+
+void PrintHelp()
+{
+    std::printf("------------------------------------------------\n");
+    std::printf("|             Welcome to Hog Lang              |\n");
+    std::printf("------------------------------------------------\n");
+    std::printf("\n");
+    std::printf("We hope you hate your stay.\n");
+}
 
 std::string ReadFile(std::string_view path)
 {
@@ -30,24 +39,25 @@ std::string ReadFile(std::string_view path)
 
 int main(int argc, char** argv)
 {
-    std::printf("%d\n", argc);
-
-    for(std::size_t idx = 1; idx < argc; idx++)
-    {
-        std::printf("%s\n", argv[idx]);
-    }
-    
+    PrintHelp();
     std::string path = std::filesystem::current_path();
     path.append("/");
     path.append(argv[1]);
     std::string sourceFile = ReadFile(path);
     std::cout << sourceFile << std::endl;
 
-    std::string delimiter = "\n";
-    std::vector<std::string> lines;
-    std::string line = sourceFile.substr(0, sourceFile.find(delimiter));
-    std::cout << line << std::endl << std::endl;
-
+    char delimiter = '\n';
+    std::vector<std::string> lines = HogStringUtils::SplitString(sourceFile, delimiter);
     Parser p;
-    p.Parse(line);
+
+    for(std::string line : lines)
+    {
+        if(!HogStringUtils::IsOnlyWhitespace(line))
+        {
+            std::cout << "Line in source file: " << line << std::endl << std::endl;
+            p.Parse(line);
+        }
+    }
+    std::string line = sourceFile.substr(0, sourceFile.find(delimiter));
+
 }

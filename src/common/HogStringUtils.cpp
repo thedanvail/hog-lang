@@ -1,5 +1,7 @@
 #include "HogDefine.h"
 #include "HogStringUtils.h"
+
+#include <algorithm>
 #include <cctype>
 #include <cstdarg>
 #include <cstdio>
@@ -9,13 +11,10 @@
 namespace HogStringUtils {
     void ReplaceChar(char* apBaseString, const char aCharToReplace, const char aNewChar)
     {
-        if(!apBaseString)
-        {
-            return;
-        }
+        ENSURE_PTR(apBaseString);
         std::size_t strLen = std::char_traits<char>::length(apBaseString);
 
-        for(int i = 0; apBaseString[i] != '\0' && i < strLen; ++i)
+        for(std::size_t i = 0; apBaseString[i] != '\0' && i < strLen; ++i)
         {
             if(apBaseString[i] == aCharToReplace)
             {
@@ -24,12 +23,26 @@ namespace HogStringUtils {
         }
     }
 
+    void ReplaceChar(char* apBaseString, const std::vector<char> aCharsToReplace, const char aNewChar)
+    {
+        ENSURE_PTR(apBaseString);
+        std::size_t strLen = std::char_traits<char>::length(apBaseString);
+
+        for(std::size_t i = 0; apBaseString[i] != '\0' && i < strLen; ++i)
+        {
+            for(char c : aCharsToReplace)
+            {
+                if(c == apBaseString[i])
+                {
+                    apBaseString[i] = aNewChar;
+                }
+            }
+        }
+    }
+
     void Format(char* apString, ...)
     {
-        if(!apString)
-        {
-            return;
-        }
+        ENSURE_PTR(apString);
         std::size_t neededLength = std::char_traits<char>::length(apString);
         va_list args;
         va_start(args, apString);
@@ -80,6 +93,19 @@ namespace HogStringUtils {
         ApplyFuncToString(apString, ToLowerChar);
     }
 
+    std::string Trim(const std::string& s) {
+        auto start = std::find_if_not(s.begin(), s.end(), [](unsigned char ch) {
+                return std::isspace(ch);
+                });
+        auto end = std::find_if_not(s.rbegin(), s.rend(), [](unsigned char ch) {
+                return std::isspace(ch);
+                }).base();
+        if (start >= end) {
+            return "";
+        }
+        return std::string(start, end);
+    }
+
     std::vector<std::string> SplitString(std::string aString, char aDelimiter)
     {
         std::vector<std::string> result;
@@ -112,5 +138,31 @@ namespace HogStringUtils {
         }
         std::string str(apString);
         return SplitString(str, aDelimiter);
+    }
+
+    bool IsOnlyWhitespace(std::string aString)
+    {
+        for(char c : aString)
+        {
+            if(!std::isspace(c))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    bool IsOnlyWhitespace(char* apString)
+    {
+        ENSURE_PTR_RETURN_VAL(apString, false);
+        std::size_t strLen = std::char_traits<char>::length(apString);
+        for(std::size_t i = 0; apString[i] != '\0' && i < strLen; ++i)
+        {
+            if(!std::isspace(apString[i]))
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }

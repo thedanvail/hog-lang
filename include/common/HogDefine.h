@@ -1,5 +1,4 @@
-#ifndef HOG_DEFINE_H
-#define HOG_DEFINE_H 
+#pragma once
 
 #if defined(__unix__) || defined(__APPLE__) || defined(__linux__) || \
     defined(_POSIX_VERSION)
@@ -14,4 +13,8 @@
     #define IS_WINDOWS 0
 #endif 
 
-#endif // End HOG_DEFINE_H
+#define ENSURE_PTR(ptr) if(!ptr) { return; }
+#define ENSURE_PTR_RETURN_VAL(ptr, retVal) if(!ptr) { return retVal; }
+#define REPORT_ERR std::printf("DAN YOU'RE MISSING SOMETHING IN %s: Line %d ", __FILE__, __LINE__);
+#define REPORT_ERR_MSG(s) std::printf("DAN YOU'RE MISSING SOMETHING IN %s: Line %d Info: %s", __FILE__, __LINE__, s);
+// TODO: THIS #define REPORT_ERR_MSG_FATAL(...) std::printf("DAN YOU'RE MISSING SOMETHING IN %s: Line %d Info: %s", __FILE__, __LINE__, s);
