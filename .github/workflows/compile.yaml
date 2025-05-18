@@ -1,0 +1,20 @@
+name: Check compilation
+run-name: ${{ github.actor }} is compiling hogc
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main 
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest 
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4 
+
+      - name: Check compilation
+        run: make fresh
+
+      - name: Echo status
+        run: echo "Compilation status: ${{ job.status }}"
