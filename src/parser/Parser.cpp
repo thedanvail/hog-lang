@@ -11,7 +11,7 @@ void Parser::Parse(std::string aInput)
 {
     std::printf("Parsing.\n");
     // TODO: Figure out if the line is a function or assignment
-    
+    LineType lt = GetLineType(aInput); 
     // End new shit
     std::size_t parenIndex = aInput.find('(');
     HogFuncs function = DetermineFunction(aInput.substr(0, parenIndex));
