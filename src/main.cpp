@@ -10,11 +10,13 @@
 
 void PrintHelp()
 {
+    std::printf("\n");
     std::printf("------------------------------------------------\n");
     std::printf("|             Welcome to Hog Lang              |\n");
     std::printf("------------------------------------------------\n");
     std::printf("\n");
     std::printf("We hope you hate your stay.\n");
+    std::printf("\n");
 }
 
 std::string ReadFile(std::string_view path)

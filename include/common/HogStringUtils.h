@@ -24,11 +24,18 @@ namespace HogStringUtils
     char ToLowerChar(char aChar);
     void ToUpper(char* apString);
     void ToLower(char* apString);
-    std::string Trim(std::string aInput);
+
+    // This is less efficient than just changing the input string,
+    // but it's safer if we don't mutate the input.
+    // Fuck you functional bros.
+    std::string Trim(const std::string aInput);
+    std::vector<std::string> SplitString(const std::string aString, char aDelimiter);
+    std::vector<std::string> SplitString(const std::string aString, const std::string aDelimiter);
     std::vector<std::string> SplitString(char* apString, char aDelimiter);
-    std::vector<std::string> SplitString(std::string aString, char aDelimiter);
     bool IsOnlyWhitespace(std::string aString);
     bool IsOnlyWhitespace(char* apString);
+    bool StringsEqual(std::string aFirstStr, std::string aSecondStr);
+    bool StringContainsAny(const std::string& aInput, std::vector<std::string> aContains);
 }
 
 template<CallableReturnChar T>

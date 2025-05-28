@@ -35,4 +35,5 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${INCLUDE_DIRS})
 
 # Add compile options
 target_compile_options(${PROJECT_NAME} PRIVATE -Wno-unused-includes)
+target_compile_options(${PROJECT_NAME} PRIVATE -Wpedantic)
 
