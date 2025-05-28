@@ -175,7 +175,7 @@ ArgType Parser::DetermineArgType(std::string aArg)
     return type;
 }
 
-bool IsExpression(const std::string& aInput)
+bool Parser::IsExpression(const std::string& aInput)
 {
     std::vector<std::string> containing{"+", "-", "*"};
     if(HogStringUtils::StringContainsAny(aInput, containing))
@@ -185,7 +185,7 @@ bool IsExpression(const std::string& aInput)
     return false;
 }
 
-void Evaluate(const std::string& aInput)
+void Parser::Evaluate(const std::string& aInput)
 {
     // TODO: Split on operands (+, -, etc) or chaining functions
     // and then evaluate. Fucking recursion.
