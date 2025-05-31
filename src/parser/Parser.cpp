@@ -89,7 +89,7 @@ LineType Parser::GetLineType(std::string aLine)
         return LineType::ASSIGNMENT;
     }
 
-    if(trimmed.find('('))
+    if(trimmed.find('(') != std::string::npos)
     {
         return LineType::FUNCTION;
     }

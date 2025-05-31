@@ -29,8 +29,8 @@ namespace HogStringUtils
     // but it's safer if we don't mutate the input.
     // Fuck you functional bros.
     std::string Trim(const std::string aInput);
-    std::vector<std::string> SplitString(const std::string aString, char aDelimiter);
-    std::vector<std::string> SplitString(const std::string aString, const std::string aDelimiter);
+    std::vector<std::string> SplitString(const std::string& aString, char aDelimiter);
+    std::vector<std::string> SplitString(const std::string& aString, const std::string aDelimiter);
     std::vector<std::string> SplitString(char* apString, char aDelimiter);
     bool IsOnlyWhitespace(std::string aString);
     bool IsOnlyWhitespace(char* apString);

@@ -107,7 +107,7 @@ namespace HogStringUtils {
         return std::string(start, end);
     }
 
-    std::vector<std::string> SplitString(const std::string aString, char aDelimiter)
+    std::vector<std::string> SplitString(const std::string& aString, char aDelimiter)
     {
         std::vector<std::string> result;
         if(!aString.size())
@@ -132,7 +132,7 @@ namespace HogStringUtils {
     }
 
 
-    std::vector<std::string> SplitString(const std::string aString, const std::string aDelimiter)
+    std::vector<std::string> SplitString(const std::string& aString, const std::string aDelimiter)
     {
         std::size_t delimiterLength = aDelimiter.size();
         std::vector<std::string> result;
@@ -149,13 +149,14 @@ namespace HogStringUtils {
                 std::string substr = aString.substr(idx, delimiterLength);
                 if(substr == aDelimiter)
                 {
-                    result.emplace_back(aString.substr(splitBeginIdx, idx + 1));
-                    splitBeginIdx = idx;
-                    idx += delimiterLength;
+                    result.emplace_back(aString.substr(splitBeginIdx, idx - splitBeginIdx));
+                    splitBeginIdx = idx + delimiterLength;
+                    idx += delimiterLength - 1;  // -1 because loop will ++idx
                 }
             }
         }
 
+        result.emplace_back(aString.substr(splitBeginIdx));
         return result;
     }
     

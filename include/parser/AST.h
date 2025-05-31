@@ -2,7 +2,7 @@ enum class NodeType
 {
     EXPR,
     STATEMENT,
-    LITERAl,
+    LITERAL,
 };
 
 struct Node

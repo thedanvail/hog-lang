@@ -69,7 +69,7 @@ struct Arg
 namespace HogTypes
 {
     ValType GetType(const std::string& aValue);
-    std::variant<std::int64_t, std::string> GetValue(const ValType aType, const std::string& aValue);
+    ArgValue GetValue(const ValType aType, const std::string& aValue);
 }
 
 struct Value
