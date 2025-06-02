@@ -93,11 +93,17 @@ namespace HogStringUtils {
         ApplyFuncToString(apString, ToLowerChar);
     }
 
-    std::string Trim(const std::string& s) {
-        auto start = std::find_if_not(s.begin(), s.end(), [](unsigned char ch) {
+    [[nodiscard]] std::string Trim(const std::string aInput)
+    {
+        if(aInput.empty())
+        {
+            return aInput;
+        }
+
+        auto start = std::find_if_not(aInput.begin(), aInput.end(), [](unsigned char ch) {
                 return std::isspace(ch);
                 });
-        auto end = std::find_if_not(s.rbegin(), s.rend(), [](unsigned char ch) {
+        auto end = std::find_if_not(aInput.rbegin(), aInput.rend(), [](unsigned char ch) {
                 return std::isspace(ch);
                 }).base();
         if (start >= end) {
@@ -106,7 +112,32 @@ namespace HogStringUtils {
         return std::string(start, end);
     }
 
-    std::vector<std::string> SplitString(std::string aString, char aDelimiter)
+    void TrimInplace(std::string &aInput)
+    {
+        RETURN_IF_EMPTY(aInput);
+        for(std::size_t idx = 0; idx < aInput.size(); ++idx)
+        {
+            if(isspace(aInput.at(idx)))
+            {
+                aInput.erase(idx, 1);
+            }
+            // We've reached the end of our whitespace, so exit the loop.
+            else 
+            {
+                break;
+            }
+        }
+
+        for(auto iter = aInput.rbegin(); iter != aInput.rend(); ++iter)
+        {
+            if(!isspace(*iter))
+            {
+                aInput.erase(iter.base(), aInput.end());
+            }
+        }
+    }
+
+    std::vector<std::string> SplitString(const std::string& aString, char aDelimiter)
     {
         std::vector<std::string> result;
         if(!aString.size())
@@ -127,6 +158,35 @@ namespace HogStringUtils {
             }
         }
         result.push_back(tmp);
+        return result;
+    }
+
+
+    std::vector<std::string> SplitString(const std::string& aString, const std::string aDelimiter)
+    {
+        std::size_t delimiterLength = aDelimiter.size();
+        std::vector<std::string> result;
+        if(!delimiterLength)
+        {
+            return result;
+        }
+        
+        std::size_t splitBeginIdx = 0;
+        for(std::size_t idx = 0; idx < aString.size(); ++idx)
+        {
+            if(aString[idx] == aDelimiter[0] && idx + delimiterLength < aString.size())
+            {
+                std::string substr = aString.substr(idx, delimiterLength);
+                if(substr == aDelimiter)
+                {
+                    result.emplace_back(aString.substr(splitBeginIdx, idx - splitBeginIdx));
+                    splitBeginIdx = idx + delimiterLength;
+                    idx += delimiterLength - 1;  // -1 because loop will ++idx
+                }
+            }
+        }
+
+        result.emplace_back(aString.substr(splitBeginIdx));
         return result;
     }
     
@@ -164,5 +224,33 @@ namespace HogStringUtils {
             }
         }
         return true;
+    }
+
+    bool StringsEqual(std::string aFirstStr, std::string aSecondStr)
+    {
+        if(aFirstStr.size() != aSecondStr.size())
+        {
+            return false;
+        }
+        for(uint32_t idx = 0; idx < aFirstStr.size(); ++idx)
+        {
+            if(aFirstStr[idx] != aSecondStr[idx])
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    bool StringContainsAny(const std::string& aInput, std::vector<std::string> aContains)
+    {
+        for(std::string& str : aContains)
+        {
+            if(aInput.contains(str))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -1,5 +1,3 @@
-ROOT_DIR := $(shell pwd)
-
 build:
 	mkdir build
 	cmake -S . -B build
@@ -17,8 +15,5 @@ test:
 	./hogc test.hog
 
 fresh-test:
-	make clean && make test
-
-check:
-	cppcheck --enable=all --inconclusive --std=c++23 -I include .
+	make clean && make build && make test
 

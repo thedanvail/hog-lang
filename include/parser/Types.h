@@ -1,9 +1,12 @@
 #pragma once
 
 #include <cmath>
+#include <cstdint>
 #include <string>
 #include <variant>
 
+
+// TODO: Clean this fucking place up.
 enum class HogFuncs
 {
     INVALID,
@@ -12,8 +15,7 @@ enum class HogFuncs
     HOGTIE, // Not a function but fuck you what're you gonna do about it?
 };
 
-using ArgValue = std::variant<int64_t, std::float_t, std::string>;
-enum class ArgType
+enum class ValType 
 {
     INVALID,
     STRING,
@@ -25,6 +27,10 @@ enum class LineType
 {
     FUNCTION,
     OPERAND,
+    COMPARISON,
+    ASSIGNMENT,
+    EMPTY,
+    INVALID,
 };
 
 enum class Ops 
@@ -33,11 +39,21 @@ enum class Ops
     MINUS,
     MULTIPLY,
     DIVIDE,
+    MODULO,
     ASSIGNMENT,
     BOOLEAN_EQUAL,
     BOOLEAN_NOT_EQUAL,
     BOOLEAN_AND,
     BOOLEAN_OR,
+};
+
+using ArgValue = std::variant<int64_t, std::float_t, std::string>;
+enum class ArgType
+{
+    INVALID,
+    STRING,
+    INT,
+    FLOAT,
 };
 
 union Label 
@@ -51,5 +67,19 @@ struct Arg
     ArgType  type;
     ArgValue value;
     Label    label;
+};
+
+namespace HogTypes
+{
+    ValType GetType(const std::string& aValue);
+    ArgValue GetValue(const ValType aType, const std::string& aValue);
+}
+
+struct Value
+{
+    Value() = default;
+    Value(const std::string& aVal);
+    ValType type;
+    ArgValue value;
 };
 

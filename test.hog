@@ -1,3 +1,5 @@
 oink("hello world");
 squeal("goodbye world");
-hogtie my_var = 5;
+hogtie 5 my_var;
+
+squeal(my_var + 6);

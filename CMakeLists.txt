@@ -7,6 +7,31 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+find_package(LLVM REQUIRED CONFIG)
+message(STATUS "Found LLVM ${LLVM_PACKAGE_VERSION}")
+message(STATUS "Using LLVMConfig.cmake in: ${LLVM_DIR}")
+
+set(LLVM_COMPONENTS
+    Core
+    IRReader
+    Support
+    # Add other components like:
+    # TransformUtils
+    # InstCombine
+    # Linker
+    # ScalarOpts
+    # IPO
+    # Target
+    # TargetMachine
+    # ExecutionEngine
+    # MCJIT
+    # Native
+    # ...
+)
+
+# Map LLVM components to their respective libraries
+llvm_map_components_to_libnames(LLVM_LIBS ${LLVM_COMPONENTS})
+
 # Gather source files
 file(GLOB_RECURSE SOURCE_FILES
   "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
@@ -18,9 +43,7 @@ file(GLOB SUBDIRS RELATIVE "${PROJECT_SOURCE_DIR}/include"
 )
 
 set(INCLUDE_DIRS "${PROJECT_SOURCE_DIR}/include" 
-    "${PROJECT_SOURCE_DIR}/include/arg_parser" 
-    "${PROJECT_SOURCE_DIR}/vendor/utpp/include" 
-    "${PROJECT_SOURCE_DIR}/src"
+    "${PROJECT_SOURCE_DIR}/include" 
 )
 
 foreach(subdir ${SUBDIRS})
@@ -35,4 +58,5 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${INCLUDE_DIRS})
 
 # Add compile options
 target_compile_options(${PROJECT_NAME} PRIVATE -Wno-unused-includes)
+target_compile_options(${PROJECT_NAME} PRIVATE -Wpedantic)
 

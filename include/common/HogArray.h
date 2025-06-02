@@ -33,5 +33,5 @@ private:
     void _Resize(uint64_t aNewSize = 0);
     std::size_t m_size = DEFAULT_ARRAY_SIZE;
     uint32_t m_lastElement;
-    T m_data[];
+    T* m_data;
 };
