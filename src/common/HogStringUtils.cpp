@@ -93,8 +93,13 @@ namespace HogStringUtils {
         ApplyFuncToString(apString, ToLowerChar);
     }
 
-    std::string Trim(const std::string aInput)
+    [[nodiscard]] std::string Trim(const std::string aInput)
     {
+        if(aInput.empty())
+        {
+            return aInput;
+        }
+
         auto start = std::find_if_not(aInput.begin(), aInput.end(), [](unsigned char ch) {
                 return std::isspace(ch);
                 });
@@ -105,6 +110,31 @@ namespace HogStringUtils {
             return "";
         }
         return std::string(start, end);
+    }
+
+    void TrimInplace(std::string &aInput)
+    {
+        RETURN_IF_EMPTY(aInput);
+        for(std::size_t idx = 0; idx < aInput.size(); ++idx)
+        {
+            if(isspace(aInput.at(idx)))
+            {
+                aInput.erase(idx, 1);
+            }
+            // We've reached the end of our whitespace, so exit the loop.
+            else 
+            {
+                break;
+            }
+        }
+
+        for(auto iter = aInput.rbegin(); iter != aInput.rend(); ++iter)
+        {
+            if(!isspace(*iter))
+            {
+                aInput.erase(iter.base(), aInput.end());
+            }
+        }
     }
 
     std::vector<std::string> SplitString(const std::string& aString, char aDelimiter)

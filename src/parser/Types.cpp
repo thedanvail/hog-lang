@@ -11,7 +11,7 @@ ValType HogTypes::GetType(const std::string &aValue)
     return ValType::INVALID;
 }
 
-std::variant<std::int64_t, std::string> HogTypes::GetValue(const ValType aType, const std::string& aValue)
+ArgValue HogTypes::GetValue(const ValType aType, const std::string& aValue)
 {
     if(IsNumeric(aValue))
     {

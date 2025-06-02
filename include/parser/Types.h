@@ -27,6 +27,7 @@ enum class LineType
 {
     FUNCTION,
     OPERAND,
+    COMPARISON,
     ASSIGNMENT,
     EMPTY,
     INVALID,
@@ -54,11 +55,13 @@ enum class ArgType
     INT,
     FLOAT,
 };
+
 union Label 
 {
     std::string str;
     void* addr;
 };
+
 struct Arg
 {
     ArgType  type;
@@ -77,6 +80,6 @@ struct Value
     Value() = default;
     Value(const std::string& aVal);
     ValType type;
-    std::variant<std::int64_t, std::string> value;
+    ArgValue value;
 };
 

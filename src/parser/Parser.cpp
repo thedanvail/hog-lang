@@ -12,6 +12,7 @@ void Parser::ParseFile(SourceFile aFile)
     // TODO: This... all of this.
 }
 
+// NOTE: ew
 void Parser::Parse(std::string aInput)
 {
     std::printf("Parsing line: %s\n", aInput.c_str());
@@ -98,6 +99,15 @@ LineType Parser::GetLineType(std::string aLine)
     if(trimmed.find('=') != std::string::npos)
     {
         // Check for `!=` and `==`
+        auto pos = trimmed.find('=');
+        if(pos != std::string::npos)
+        {
+            bool isComparison =
+                (pos > 0 && trimmed[pos-1] == '=') ||
+                (pos + 1 < trimmed.size() && trimmed[pos+1] == '=');
+            if(isComparison)
+                return LineType::COMPARISON;
+        }
     }
 
     return LineType::INVALID;
@@ -158,6 +168,8 @@ void Parser::ExecuteFunction(HogFuncs aFunc, std::vector<std::string> aArgs)
             std::printf("%s\n", aArgs[0].c_str());
             break;
         case HogFuncs::SQUEAL:
+            // TODO: If the thing inside the parens don't start and end with `"`, 
+            // then be sure to evaluate the expression inside.
             arg = const_cast<char*>(aArgs[0].c_str());
             HogStringUtils::ToUpper(arg);
             std::printf("%s\n", arg);
