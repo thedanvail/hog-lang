@@ -40,7 +40,7 @@ void Squeal::Squeal(const std::string& aString, ...)
     std::string ret;
     // Alright, let's begin with the ugliest shit you've ever seen.
     // For right now, just basic arithmetic.
-    if(aString.contains('+'))
+    if (aString.find('+') != std::string::npos)
     {
         std::vector<std::string> split = HogStringUtils::SplitString(aString, '+');
         for(std::string& str : split)
