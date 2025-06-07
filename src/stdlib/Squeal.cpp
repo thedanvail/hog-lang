@@ -50,6 +50,7 @@ void Squeal::Squeal(const std::string& aString, ...)
         // Leaving off here. I need to evaluate a simple lhs + rhs
         // knowing that either/both/neither sides could be variables or 
         // constant values.
+        // Who knew making a compiler was tough?
     }
 
     return ret;

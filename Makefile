@@ -1,5 +1,9 @@
+default_target: build
+
 build:
-	mkdir build
+	if [ ! -d build ]; then \
+		echo "Creating build directory." && mkdir build; \
+	fi
 	cmake -S . -B build
 	cmake --build build
 	mv build/compile_commands.json .
