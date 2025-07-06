@@ -6,3 +6,4 @@ compile_commands.json
 bin/
 hog-lang
 hogc
+test.hog.o

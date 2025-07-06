@@ -13,8 +13,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4 
 
-      - name: Check compilation
+      - name: Compilation
         run: make fresh
+
+      - name: Testing compiler
+        run: ./hogc test.hog
+        working-directory: ./
+
+      - name: Attempting linking
+        run: clang test.hog.o -o hogtest -no-pie
+        working-directory: ./
 
       - name: Echo status
         run: echo "Compilation status: ${{ job.status }}"
