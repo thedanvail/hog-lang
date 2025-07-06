@@ -54,7 +54,14 @@ void HogLog::LogNow(ErrorLevel aErrLevel, std::string aLogString)
 {
     std::string out = StringifyErrorLevel(aErrLevel);
     out.append(aLogString);
-    std::printf("%s", out.c_str());
+    std::printf("%s\n", out.c_str());
+}
+
+void HogLog::LogNow(ErrorLevel aErrLevel, const char* aLogString)
+{
+    std::string out = StringifyErrorLevel(aErrLevel);
+    out.append(aLogString);
+    std::printf("%s\n", out.c_str());
 }
 
 void HogLog::LogfNow(ErrorLevel aErrLevel, char* apLogString, ...)
@@ -65,7 +72,7 @@ void HogLog::LogfNow(ErrorLevel aErrLevel, char* apLogString, ...)
     HogStringUtils::Format(apLogString, args);
     va_end(args);
     out.append(apLogString);
-    std::printf("%s", out.c_str());
+    std::printf("%s\n", out.c_str());
 }
 
 void HogLog::LogfNow(ErrorLevel aErrLevel, std::string aLogString, ...)
@@ -75,7 +82,7 @@ void HogLog::LogfNow(ErrorLevel aErrLevel, std::string aLogString, ...)
     va_start(args, aLogString);
     HogStringUtils::Format(aLogString, args);
     va_end(args);
-    std::printf("%s", out.c_str());
+    std::printf("%s\n", out.c_str());
 }
 
 void HogLog::SetImmediateLogging(bool aImmediateLogging)
@@ -129,7 +136,7 @@ void HogLog::Append(std::string aInput)
 
     if(m_immediateLogging)
     {
-        std::printf("%s", aInput.c_str());
+        std::printf("%s\n", aInput.c_str());
         return;
     }
 
@@ -147,6 +154,6 @@ bool HogLog::ShouldFlush()
 
 void HogLog::Flush()
 {
-    std::printf("%s", m_logBuffer.c_str());
+    std::printf("%s\n", m_logBuffer.c_str());
     m_logBuffer.clear();
 }

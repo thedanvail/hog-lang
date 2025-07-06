@@ -31,6 +31,7 @@ public:
     static void Logf(ErrorLevel aErrLevel, std::string aLogString, ...);
     static void LogNow(ErrorLevel aErrLevel, char* apLogString);
     static void LogNow(ErrorLevel aErrLevel, std::string aLogString);
+    static void LogNow(ErrorLevel aErrLevel, const char* aLogString);
     static void LogfNow(ErrorLevel aErrLevel, char* apLogString, ...);
     static void LogfNow(ErrorLevel aErrLevel, std::string aLogString, ...);
 

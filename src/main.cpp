@@ -1,3 +1,5 @@
+#include "HogLLVM.h"
+#include "HogLog.h"
 #include "HogStringUtils.h"
 #include "Parser.h"
 
@@ -5,6 +7,8 @@
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <llvm-14/llvm/IR/IRBuilder.h>
+#include <llvm-14/llvm/IR/Type.h>
 #include <string>
 #include <unistd.h>
 
@@ -15,7 +19,7 @@ void PrintHelp()
     std::printf("|             Welcome to Hog Lang              |\n");
     std::printf("------------------------------------------------\n");
     std::printf("\n");
-    std::printf("We hope you hate your stay.\n");
+    std::printf("          We hope you hate your stay.\n");
     std::printf("\n");
 }
 
@@ -42,24 +46,28 @@ std::string ReadFile(std::string_view path)
 int main(int argc, char** argv)
 {
     PrintHelp();
-    std::string path = std::filesystem::current_path();
-    path.append("/");
-    path.append(argv[1]);
-    std::string sourceFile = ReadFile(path);
-    std::cout << sourceFile << std::endl;
 
-    char delimiter = '\n';
-    std::vector<std::string> lines = HogStringUtils::SplitString(sourceFile, delimiter);
-    Parser p;
+    HogLLVM& hogLLVM = HogLLVM::GetInstance();
+    // llvm::IRBuilder<>& builder = HogLLVM::GetBuilder();
+    // llvm::Type* voidType = builder.getVoidTy();
+    // llvm::Type* i32Type = builder.getInt32Ty();
+    // std::vector<llvm::Type*> argTypes;
+    // argTypes.push_back(i32Type);
+    // argTypes.push_back(i32Type);
+    // constexpr bool isVariadic = false;
+    // llvm::FunctionType* ex = llvm::FunctionType::get(i32Type, argTypes, isVariadic);
+    // llvm::Function* exFunc = hogLLVM.CreateFunction(ex, "add");
 
-    for(std::string line : lines)
-    {
-        if(!HogStringUtils::IsOnlyWhitespace(line))
-        {
-            std::cout << "Line in source file: " << line << std::endl << std::endl;
-            p.Parse(line);
-        }
-    }
-    std::string line = sourceFile.substr(0, sourceFile.find(delimiter));
+    // Name the args
+    // auto iter = exFunc->arg_begin();
+    // llvm::Value* arg1 = &*iter++;
+    // arg1->setName("FirstArg");
+    // llvm::Value* arg2 = &*iter++;
+    // arg2->setName("SecondArg");
 
+    // Create code block
+    hogLLVM.AppendMain();
+    hogLLVM.PrintIR();
+    HogLog::LogNow(ErrorLevel::DEBUG, "Attempting to compile to object file");
+    hogLLVM.EmitObject("test.hog.o");
 }
